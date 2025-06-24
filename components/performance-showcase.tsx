@@ -229,7 +229,7 @@ export function PerformanceShowcase() {
                     category: "Loading Strategy",
                     techniques: ["Preloading", "Prefetching", "Resource hints", "Progressive loading"],
                   },
-                ].map((category, _index) => (
+                ].map((category) => (
                   <div key={category.category} className="space-y-3">
                     <h5 className="font-semibold text-primary">{category.category}</h5>
                     <ul className="space-y-1">

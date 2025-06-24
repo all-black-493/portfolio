@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { ERROR_MESSAGES, handleApiError } from "@/lib/errors"
+import { ERROR_MESSAGES } from "@/lib/errors"
 
 // Mock GitHub data - in production, you'd fetch from GitHub API
 const mockGitHubData = {
@@ -67,7 +67,7 @@ export async function GET() {
     await new Promise((resolve) => setTimeout(resolve, 500))
 
     return NextResponse.json(mockGitHubData)
-  } catch (error) {
+  } catch {
     // const errorMessage = handleApiError(error, "GitHub API fetch")
 
     return NextResponse.json({ error: ERROR_MESSAGES.GITHUB.FETCH_FAILED }, { status: 500 })

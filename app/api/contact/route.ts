@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: "Thank you for your message! I'll get back to you within 24 hours.",
     })
-  } catch (error) {
+  } catch{
     // const errorMessage = handleApiError(error, "Contact form submission")
 
     return NextResponse.json({ error: ERROR_MESSAGES.CONTACT_FORM.SUBMISSION_FAILED }, { status: 500 })

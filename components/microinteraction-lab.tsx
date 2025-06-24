@@ -201,7 +201,7 @@ function HoverCards() {
 
   return (
     <div className="flex items-center justify-center p-8 gap-4">
-      {cards.map((card, _index) => (
+      {cards.map((card) => (
         <motion.div
           key={card.title}
           className="relative w-32 h-40 bg-background border rounded-xl cursor-pointer overflow-hidden"
