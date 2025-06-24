@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Development application with hot reload
+  app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deps
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_TELEMETRY_DISABLED=1
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    command: pnpm dev
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+networks:
+  default:
+    name: portfolio-dev-network
