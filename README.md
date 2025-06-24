@@ -1,139 +1,170 @@
-# 🚀 Developer Portfolio
+# 🚀 Enterprise Portfolio - Advanced System Design
 
-An award-winning, production-ready portfolio website built with Next.js 15, featuring advanced animations, performance optimizations, and modern development practices.
+A production-ready, enterprise-grade portfolio showcasing advanced full-stack architecture with distributed systems, caching, message queues, and comprehensive observability.
 
-## ✨ Features
+## 🏗️ System Architecture
 
-- **🎨 Modern Design**: Clean, responsive design with dark/light theme support
-- **⚡ Performance Optimized**: Lighthouse score 98+, Core Web Vitals optimized
-- **🔧 Interactive Components**: Code playground, microinteraction lab, tech stack visualizer
-- **📱 Mobile First**: Fully responsive design with touch-friendly interactions
-- **🛡️ Type Safe**: Full TypeScript implementation with strict type checking
-- **🐳 Docker Ready**: Production-grade containerization with multi-stage builds
-- **🔄 CI/CD Pipeline**: Automated testing, building, and deployment
-- **📊 Analytics Ready**: Built-in support for Vercel Analytics and Google Analytics
-- **♿ Accessible**: WCAG 2.1 AA compliant with semantic HTML
+\`\`\`
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Next.js App   │────│   Redis Cache   │    │   RabbitMQ      │
+│                 │    │                 │    │   Message Queue │
+│ • Server Actions│    │ • API Caching   │    │                 │
+│ • Type Safety   │    │ • Rate Limiting │    │ • Email Jobs    │
+│ • Validation    │    │ • Session Store │    │ • Analytics     │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         └───────────────────────┼───────────────────────┘
+                                 │
+                    ┌─────────────────┐
+                    │  System Status  │
+                    │   Dashboard     │
+                    │                 │
+                    │ • Health Checks │
+                    │ • Metrics       │
+                    │ • Monitoring    │
+                    └─────────────────┘
+\`\`\`
+
+## ✨ Advanced Features
+
+### 🔒 **Type-Safe Server Actions**
+- **next-safe-action** with Zod validation
+- Full type inference between client and server
+- Centralized error handling and logging
+- Input sanitization and validation
+
+### ⚡ **Redis Caching Layer**
+- API response caching with TTL
+- Rate limiting implementation
+- Cache hit/miss analytics
+- Configurable cache strategies
+
+### 🐰 **RabbitMQ Message Queue**
+- Asynchronous email processing
+- Analytics event queuing
+- Durable queues with retry policies
+- Dead letter queue handling
+
+### 📊 **System Observability**
+- Real-time system status dashboard
+- Redis cache metrics and performance
+- RabbitMQ queue monitoring
+- Application health checks
+
+### 🐳 **Production DevOps**
+- Multi-stage Docker builds
+- Docker Compose orchestration
+- Health checks and monitoring
+- Optimized for production deployment
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 15 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + shadcn/ui
-- **Animations**: Framer Motion
-- **Notifications**: Sonner
-- **Icons**: Lucide React
-- **Deployment**: Vercel / Docker
-- **CI/CD**: GitHub Actions
+### **Core Framework**
+- **Next.js 15** - App Router with Server Components
+- **TypeScript** - Full type safety
+- **Tailwind CSS** - Utility-first styling
+- **Framer Motion** - Advanced animations
+
+### **Backend Architecture**
+- **next-safe-action** - Type-safe server actions
+- **Zod** - Runtime type validation
+- **Redis** - High-performance caching
+- **RabbitMQ** - Message queue system
+
+### **Developer Experience**
+- **Sonner** - Toast notifications
+- **shadcn/ui** - Component library
+- **ESLint + Prettier** - Code quality
+- **Husky** - Git hooks
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ 
-- pnpm 8+
-- Docker (optional)
+- **Node.js 18+**
+- **pnpm 8+**
+- **Docker & Docker Compose**
 
-### Local Development
+### 1. Clone & Install
 
-1. **Clone the repository**
-   \`\`\`bash
-   git clone https://github.com/yourusername/developer-portfolio.git
-   cd developer-portfolio
-   \`\`\`
-
-2. **Install dependencies**
-   \`\`\`bash
-   pnpm install
-   \`\`\`
-
-3. **Set up environment variables**
-   \`\`\`bash
-   cp .env.example .env.local
-   # Edit .env.local with your configuration
-   \`\`\`
-
-4. **Start development server**
-   \`\`\`bash
-   pnpm dev
-   \`\`\`
-
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-### Docker Development
-
-1. **Start with Docker Compose**
-   \`\`\`bash
-   pnpm docker:dev
-   \`\`\`
-
-2. **Or build and run manually**
-   \`\`\`bash
-   pnpm docker:build
-   pnpm docker:run
-   \`\`\`
-
-## 📦 Production Deployment
-
-### Vercel (Recommended)
-
-1. **Deploy to Vercel**
-   \`\`\`bash
-   vercel --prod
-   \`\`\`
-
-2. **Set environment variables in Vercel dashboard**
-
-### Docker Production
-
-1. **Build production image**
-   \`\`\`bash
-   docker build -t portfolio .
-   \`\`\`
-
-2. **Run production container**
-   \`\`\`bash
-   docker run -p 3000:3000 --env-file .env portfolio
-   \`\`\`
-
-3. **Or use Docker Compose**
-   \`\`\`bash
-   pnpm docker:prod
-   \`\`\`
-
-## 🧪 Testing & Quality
-
-### Run Tests
 \`\`\`bash
-# Unit tests
-pnpm test
-
-# Watch mode
-pnpm test:watch
-
-# Coverage report
-pnpm test:coverage
+git clone https://github.com/yourusername/enterprise-portfolio.git
+cd enterprise-portfolio
+pnpm install
 \`\`\`
 
-### Code Quality
+### 2. Environment Setup
+
 \`\`\`bash
-# Linting
-pnpm lint
-
-# Type checking
-pnpm type-check
-
-# Security audit
-pnpm security:audit
+cp .env.example .env.local
+# Edit .env.local with your configuration
 \`\`\`
 
-### Performance Testing
-\`\`\`bash
-# Lighthouse CI
-pnpm lighthouse
+### 3. Start Infrastructure Services
 
-# Bundle analysis
-pnpm analyze
+\`\`\`bash
+# Start Redis and RabbitMQ
+pnpm services:start
+
+# Or start everything with Docker Compose
+pnpm docker:dev
+\`\`\`
+
+### 4. Development Server
+
+\`\`\`bash
+pnpm dev
+\`\`\`
+
+Visit [http://localhost:3000](http://localhost:3000)
+
+## 🐳 Docker Deployment
+
+### Development Environment
+
+\`\`\`bash
+# Start all services in development mode
+pnpm docker:dev
+
+# View logs
+pnpm docker:logs
+
+# Stop services
+pnpm docker:down
+\`\`\`
+
+### Production Deployment
+
+\`\`\`bash
+# Build and start production environment
+pnpm docker:prod
+
+# Scale the application
+docker-compose up --scale app=3
+\`\`\`
+
+## 📊 System Monitoring
+
+### System Status Dashboard
+Visit `/system-status` to view:
+- Application uptime and memory usage
+- Redis cache performance metrics
+- RabbitMQ queue depths and processing stats
+- Real-time health monitoring
+
+### RabbitMQ Management UI
+- **URL**: http://localhost:15672
+- **Username**: admin
+- **Password**: password
+
+### Redis Monitoring
+\`\`\`bash
+# Connect to Redis CLI
+docker exec -it portfolio-redis redis-cli
+
+# View cache stats
+INFO memory
+INFO stats
 \`\`\`
 
 ## 🔧 Available Scripts
@@ -143,72 +174,135 @@ pnpm analyze
 | `pnpm dev` | Start development server |
 | `pnpm build` | Build for production |
 | `pnpm start` | Start production server |
+| `pnpm docker:dev` | Start development with Docker |
+| `pnpm docker:prod` | Start production with Docker |
+| `pnpm services:start` | Start Redis & RabbitMQ only |
 | `pnpm lint` | Run ESLint |
 | `pnpm type-check` | Run TypeScript compiler |
 | `pnpm test` | Run Jest tests |
-| `pnpm docker:build` | Build Docker image |
-| `pnpm docker:dev` | Start development with Docker |
-| `pnpm lighthouse` | Run Lighthouse performance tests |
-
-## 🌍 Environment Variables
-
-Create a `.env.local` file based on `.env.example`:
-
-\`\`\`bash
-# Required
-GITHUB_TOKEN=your_github_token
-
-# Optional
-CONTACT_EMAIL=your-email@example.com
-GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
-SENTRY_DSN=your_sentry_dsn
-\`\`\`
 
 ## 🏗️ Project Structure
 
 \`\`\`
-├── app/                    # Next.js app directory
-│   ├── api/               # API routes
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Home page
-├── components/            # React components
-│   ├── ui/               # shadcn/ui components
-│   └── ...               # Feature components
-├── lib/                  # Utility libraries
-│   ├── errors.ts         # Centralized error handling
-│   └── toast.ts          # Toast notifications
-├── .github/              # GitHub Actions workflows
-├── docker-compose.yml    # Docker Compose configuration
-├── Dockerfile           # Docker configuration
-└── README.md           # This file
+├── app/
+│   ├── actions/           # Server actions with validation
+│   ├── api/              # API routes
+│   ├── system-status/    # System monitoring dashboard
+│   └── ...
+├── lib/
+│   ├── validations.ts    # Zod schemas
+│   ├── redis.ts          # Redis client & caching
+│   ├── rabbitmq.ts       # Message queue client
+│   ├── safe-actions.ts   # Action client setup
+│   └── errors.ts         # Centralized error handling
+├── components/           # React components
+├── docker-compose.yml    # Production orchestration
+├── docker-compose.dev.yml # Development orchestration
+└── Dockerfile           # Multi-stage build
 \`\`\`
 
-## 🔄 CI/CD Pipeline
+## 🔒 Security Features
 
-The project includes a comprehensive GitHub Actions pipeline:
+### **Input Validation**
+- Zod schema validation for all inputs
+- SQL injection prevention
+- XSS protection with sanitization
 
-- **Code Quality**: ESLint, TypeScript, Prettier
-- **Testing**: Jest unit tests with coverage
-- **Security**: Dependency audit, Docker image scanning
-- **Performance**: Lighthouse CI testing
-- **Deployment**: Automated Vercel deployment
+### **Rate Limiting**
+- Redis-based rate limiting
+- Configurable limits per endpoint
+- IP-based tracking
 
-## 🛡️ Security Features
+### **Error Handling**
+- Centralized error logging
+- Sanitized error responses
+- Development vs production error modes
 
-- **Rate Limiting**: API endpoint protection
-- **Input Validation**: Comprehensive form validation
-- **Error Handling**: Centralized error management
-- **Security Headers**: Production security headers
-- **Docker Security**: Non-root user, minimal base image
+## ⚡ Performance Optimizations
 
-## 📊 Performance Optimizations
+### **Caching Strategy**
+- API response caching with Redis
+- Intelligent cache invalidation
+- Cache warming for critical data
 
-- **Image Optimization**: Next.js Image component with WebP/AVIF
-- **Code Splitting**: Automatic route-based splitting
-- **Bundle Analysis**: Webpack bundle analyzer integration
-- **Caching**: Aggressive caching strategies
-- **Compression**: Gzip/Brotli compression
+### **Async Processing**
+- Non-blocking email sending
+- Background analytics processing
+- Queue-based task distribution
+
+### **Resource Optimization**
+- Docker multi-stage builds
+- Image optimization
+- Bundle analysis and splitting
+
+## 📈 Monitoring & Observability
+
+### **Application Metrics**
+- Memory usage tracking
+- Response time monitoring
+- Error rate analysis
+
+### **Infrastructure Metrics**
+- Redis cache hit/miss ratios
+- RabbitMQ queue depths
+- Docker container health
+
+### **Business Metrics**
+- Contact form submissions
+- Page view analytics
+- User engagement tracking
+
+## 🚀 Deployment Options
+
+### **Vercel (Recommended)**
+\`\`\`bash
+# Deploy to Vercel
+vercel --prod
+
+# Set environment variables in Vercel dashboard
+# Deploy Redis/RabbitMQ separately (Redis Cloud, CloudAMQP)
+\`\`\`
+
+### **Docker Production**
+\`\`\`bash
+# Build production image
+docker build -t portfolio .
+
+# Run with external services
+docker run -p 3000:3000 \
+  -e REDIS_URL=redis://your-redis-host:6379 \
+  -e RABBITMQ_URL=amqp://user:pass@your-rabbitmq-host:5672 \
+  portfolio
+\`\`\`
+
+### **Kubernetes**
+\`\`\`yaml
+# Example Kubernetes deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: portfolio
+  template:
+    metadata:
+      labels:
+        app: portfolio
+    spec:
+      containers:
+      - name: portfolio
+        image: portfolio:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REDIS_URL
+          value: "redis://redis-service:6379"
+        - name: RABBITMQ_URL
+          value: "amqp://user:pass@rabbitmq-service:5672"
+\`\`\`
 
 ## 🤝 Contributing
 
@@ -225,11 +319,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - [Next.js](https://nextjs.org/) - The React framework
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Framer Motion](https://www.framer.com/motion/) - Animation library
-- [shadcn/ui](https://ui.shadcn.com/) - Component library
-- [Vercel](https://vercel.com/) - Deployment platform
+- [next-safe-action](https://next-safe-action.dev/) - Type-safe server actions
+- [Redis](https://redis.io/) - In-memory data structure store
+- [RabbitMQ](https://www.rabbitmq.com/) - Message broker
+- [Zod](https://zod.dev/) - TypeScript-first schema validation
 
 ---
 
-Built with ❤️ by [Alex Chen](https://github.com/alexchen)
+**Built with ❤️ by [Alex Chen](https://github.com/alexchen)**
+
+*Showcasing enterprise-grade full-stack architecture with distributed systems, type safety, and production-ready DevOps practices.*

@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -10,7 +10,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Mail, Phone, MapPin, Calendar, Send, Github, Linkedin, Twitter, ExternalLink } from "lucide-react"
 import { showToast } from "@/lib/toast"
-import { ERROR_MESSAGES, SUCCESS_MESSAGES, INFO_MESSAGES, logError } from "@/lib/errors"
+import { submitContactForm } from "@/app/actions/contact"
+import { trackEvent } from "@/app/actions/analytics"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -19,57 +20,32 @@ export function ContactSection() {
     subject: "",
     message: "",
   })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
 
-    try {
-      const loadingToast = showToast.loading(INFO_MESSAGES.CONTACT_FORM.SENDING)
+    startTransition(async () => {
+      try {
+        const result = await submitContactForm(formData)
 
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+        if (result?.data?.success) {
+          showToast.success(result.data.message, "I'll get back to you within 24 hours.")
+          setFormData({ name: "", email: "", subject: "", message: "" })
 
-      const data = await response.json()
-
-      // Dismiss loading toast
-      if (loadingToast) {
-        // Sonner automatically handles dismissing loading toasts
-      }
-
-      if (response.ok) {
-        showToast.success(
-          SUCCESS_MESSAGES.CONTACT_FORM.MESSAGE_SENT,
-          SUCCESS_MESSAGES.CONTACT_FORM.MESSAGE_SENT_DESCRIPTION,
-        )
-        setFormData({ name: "", email: "", subject: "", message: "" })
-      } else {
-        // Handle specific error cases
-        if (response.status === 429) {
-          showToast.error(ERROR_MESSAGES.CONTACT_FORM.RATE_LIMITED)
-        } else if (response.status === 400) {
-          showToast.error(data.error || ERROR_MESSAGES.API.VALIDATION_ERROR)
-        } else {
-          showToast.error(ERROR_MESSAGES.CONTACT_FORM.SUBMISSION_FAILED)
+          // Track successful submission
+          await trackEvent({
+            event: "contact_form_submit",
+            metadata: { success: true },
+            timestamp: new Date().toISOString(),
+          })
+        } else if (result?.serverError) {
+          showToast.error("Submission failed", result.serverError)
         }
+      } catch (error) {
+        showToast.error("Network error", "Please check your connection and try again.")
       }
-    } catch (error) {
-      logError(error, "Contact form submission")
-
-      if (error instanceof TypeError && error.message.includes("fetch")) {
-        showToast.error(ERROR_MESSAGES.GENERAL.NETWORK_UNAVAILABLE)
-      } else {
-        showToast.error(ERROR_MESSAGES.CONTACT_FORM.NETWORK_ERROR)
-      }
-    } finally {
-      setIsSubmitting(false)
-    }
+    })
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -82,10 +58,9 @@ export function ContactSection() {
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText("alex@example.com")
-      showToast.success(SUCCESS_MESSAGES.GENERAL.COPIED_TO_CLIPBOARD)
+      showToast.success("Email copied to clipboard!")
     } catch (error) {
-      logError(error, "Copy email to clipboard")
-      showToast.error(ERROR_MESSAGES.GENERAL.BROWSER_NOT_SUPPORTED)
+      showToast.error("Failed to copy email")
     }
   }
 
@@ -100,10 +75,10 @@ export function ContactSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-            Let&apos;s Work Together
+            Let's Work Together
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Ready to bring your ideas to life? Let&apos;s discuss your next project and create something amazing together.
+            Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
           </p>
         </motion.div>
 
@@ -202,7 +177,7 @@ export function ContactSection() {
                   <span className="font-medium">Currently Available</span>
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Open to new opportunities and exciting projects. Let&apos;s build something great together!
+                  Open to new opportunities and exciting projects. Let's build something great together!
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary">Full-time</Badge>
@@ -225,7 +200,7 @@ export function ContactSection() {
               <CardHeader>
                 <CardTitle className="text-2xl">Send Me a Message</CardTitle>
                 <p className="text-muted-foreground">
-                  Fill out the form below and I&apos;ll get back to you within 24 hours.
+                  Fill out the form below and I'll get back to you within 24 hours.
                 </p>
               </CardHeader>
               <CardContent>
@@ -300,10 +275,10 @@ export function ContactSection() {
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                     <Button
                       type="submit"
-                      disabled={isSubmitting}
+                      disabled={isPending}
                       className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 text-lg font-medium"
                     >
-                      {isSubmitting ? (
+                      {isPending ? (
                         <div className="flex items-center gap-2">
                           <div className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
                           Sending...

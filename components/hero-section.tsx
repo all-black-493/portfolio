@@ -55,7 +55,7 @@ export function HeroSection() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Alex Chen
+            Jeremy Okello
           </motion.h1>
 
           <div className="text-xl md:text-2xl text-muted-foreground mb-8 h-16">

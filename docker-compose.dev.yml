@@ -1,23 +1,51 @@
 version: '3.8'
 
 services:
-  # Development application with hot reload
+  # Redis Cache (Development)
+  redis-dev:
+    image: redis:7-alpine
+    container_name: portfolio-redis-dev
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  # RabbitMQ Message Queue (Development)
+  rabbitmq-dev:
+    image: rabbitmq:3-management-alpine
+    container_name: portfolio-rabbitmq-dev
+    ports:
+      - "5672:5672"   # AMQP port
+      - "15672:15672" # Management UI (admin/password)
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
+    restart: unless-stopped
+
+  # Development Application with hot reload
   app-dev:
     build:
       context: .
       dockerfile: Dockerfile
       target: deps
+    container_name: portfolio-app-dev
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=development
       - NEXT_TELEMETRY_DISABLED=1
+      - REDIS_URL=redis://redis-dev:6379
+      - RABBITMQ_URL=amqp://admin:password@rabbitmq-dev:5672
       - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - CONTACT_EMAIL=${CONTACT_EMAIL}
     volumes:
       - .:/app
       - /app/node_modules
       - /app/.next
     command: pnpm dev
+    depends_on:
+      - redis-dev
+      - rabbitmq-dev
     restart: unless-stopped
     stdin_open: true
     tty: true

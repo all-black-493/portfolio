@@ -12,7 +12,6 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  swcMinify: true,
   eslint: {
     ignoreDuringBuilds: false,
   },

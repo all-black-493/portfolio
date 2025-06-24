@@ -17,7 +17,7 @@ export function Footer() {
               className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent"
               whileHover={{ scale: 1.05 }}
             >
-              Alex Chen
+              Jeremy Okello
             </motion.div>
             <p className="text-muted-foreground text-sm">
               Full-stack developer passionate about creating exceptional digital experiences.
@@ -27,7 +27,7 @@ export function Footer() {
                 { icon: Github, href: "https://github.com" },
                 { icon: Linkedin, href: "https://linkedin.com" },
                 { icon: Twitter, href: "https://twitter.com" },
-                { icon: Mail, href: "mailto:alex@example.com" },
+                { icon: Mail, href: "mailto:Nyangijeremy@gmail.com" },
               ].map((social, index) => (
                 <motion.a
                   key={index}
@@ -79,16 +79,16 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Get In Touch</h3>
             <div className="space-y-2 text-sm text-muted-foreground">
-              <p>San Francisco, CA</p>
-              <p>alex@example.com</p>
-              <p>+1 (555) 123-4567</p>
+              <p>Nairobi, KE</p>
+              <p>nyangijeremy@gmail.com</p>
+              <p>+254 757 573 984</p>
             </div>
           </div>
         </div>
 
         <div className="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm flex items-center gap-1">
-            © {currentYear} Alex Chen. Made with <Heart className="w-4 h-4 text-red-500" /> using Next.js
+            © {currentYear} Jeremy Okello. Made with <Heart className="w-4 h-4 text-red-500" /> using Next.js
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link href="/privacy" className="text-muted-foreground hover:text-primary text-sm transition-colors">

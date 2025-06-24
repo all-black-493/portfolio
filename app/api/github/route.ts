@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server"
-import { ERROR_MESSAGES } from "@/lib/errors"
+import { redis, cacheKeys } from "@/lib/redis"
+import { githubUserSchema, githubRepoSchema } from "@/lib/validations"
+import { ERROR_MESSAGES, handleApiError } from "@/lib/errors"
+
+// Cache TTL for GitHub data (1 hour)
+const GITHUB_CACHE_TTL = 3600
 
 // Mock GitHub data - in production, you'd fetch from GitHub API
 const mockGitHubData = {
@@ -55,21 +60,55 @@ const mockGitHubData = {
 
 export async function GET() {
   try {
+    const username = "alexchen" // In production, get from env or params
+    const userCacheKey = cacheKeys.github(username)
+    const reposCacheKey = cacheKeys.githubRepos(username)
+
+    // Try to get data from cache first
+    const cachedData = await redis.get<typeof mockGitHubData>(userCacheKey)
+
+    if (cachedData) {
+      console.log("🎯 Serving GitHub data from cache")
+      return NextResponse.json(cachedData)
+    }
+
+    console.log("🌐 Fetching fresh GitHub data")
+
     // In production, you would fetch from GitHub API:
-    // const response = await fetch('https://api.github.com/users/yourusername', {
-    //   headers: {
-    //     'Authorization': `token ${process.env.GITHUB_TOKEN}`,
-    //     'Accept': 'application/vnd.github.v3+json'
-    //   }
-    // })
+    // const [userResponse, reposResponse] = await Promise.all([
+    //   fetch(`https://api.github.com/users/${username}`, {
+    //     headers: {
+    //       'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+    //       'Accept': 'application/vnd.github.v3+json'
+    //     }
+    //   }),
+    //   fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`, {
+    //     headers: {
+    //       'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+    //       'Accept': 'application/vnd.github.v3+json'
+    //     }
+    //   })
+    // ])
 
     // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 500))
 
-    return NextResponse.json(mockGitHubData)
-  } catch {
-    // const errorMessage = handleApiError(error, "GitHub API fetch")
+    // Validate data with Zod schemas
+    const validatedUser = githubUserSchema.parse(mockGitHubData.user)
+    const validatedRepos = mockGitHubData.repos.map((repo) => githubRepoSchema.parse(repo))
 
+    const responseData = {
+      user: validatedUser,
+      repos: validatedRepos,
+      contributions: mockGitHubData.contributions,
+    }
+
+    // Cache the validated data
+    await redis.set(userCacheKey, responseData, GITHUB_CACHE_TTL)
+
+    return NextResponse.json(responseData)
+  } catch (error) {
+    const errorMessage = handleApiError(error, "GitHub API fetch")
     return NextResponse.json({ error: ERROR_MESSAGES.GITHUB.FETCH_FAILED }, { status: 500 })
   }
 }
