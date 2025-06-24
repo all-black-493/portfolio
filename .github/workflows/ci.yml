@@ -220,7 +220,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [quality, build, docker]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment: production
+    environment: deployment
 
     steps:
       - name: Checkout code
