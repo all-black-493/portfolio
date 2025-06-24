@@ -53,7 +53,7 @@ jobs:
         run: pnpm type-check
 
       - name: Install Playwright browsers
-        run: pnpm exec playwright install
+        run: pnpm exec playwright install --with-deps
 
       - name: Run tests
         run: pnpm test
