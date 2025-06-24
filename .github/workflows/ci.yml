@@ -144,6 +144,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Build Docker image
+        run: docker build -t portfolio:test .
+
       - name: Test Docker image
         run: |
           docker run --rm -d --name portfolio-test -p 3000:3000 portfolio:test
