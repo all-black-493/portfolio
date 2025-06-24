@@ -71,7 +71,7 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             Crafting exceptional digital experiences with modern technologies. Passionate about clean code, innovative
-            solutions, and pushing the boundaries of what's possible on the web.
+            solutions, and pushing the boundaries of what&apos;s possible on the web.
           </motion.p>
 
           <motion.div

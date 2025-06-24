@@ -47,7 +47,7 @@ export function TechStackVisualizer() {
             Tech Stack
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A comprehensive overview of the technologies I work with and the projects where I've applied them
+            A comprehensive overview of the technologies I work with and the projects where I&apos;ve applied them
           </p>
         </motion.div>
 

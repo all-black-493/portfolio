@@ -68,7 +68,7 @@ export async function GET() {
 
     return NextResponse.json(mockGitHubData)
   } catch (error) {
-    const errorMessage = handleApiError(error, "GitHub API fetch")
+    // const errorMessage = handleApiError(error, "GitHub API fetch")
 
     return NextResponse.json({ error: ERROR_MESSAGES.GITHUB.FETCH_FAILED }, { status: 500 })
   }

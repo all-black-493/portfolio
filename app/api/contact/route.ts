@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { ERROR_MESSAGES, logError, handleApiError } from "@/lib/errors"
+import { ERROR_MESSAGES, logError } from "@/lib/errors"
 
 // Rate limiting store (in production, use Redis or similar)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>()
@@ -33,7 +33,11 @@ function checkRateLimit(identifier: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     // Rate limiting
-    const identifier = request.ip ?? "anonymous"
+    const forwardedFor = request.headers.get("x-forwarded-for")
+    const identifier =
+      (forwardedFor ? forwardedFor.split(",")[0].trim() : null) ??
+      request.headers.get("x-real-ip") ??
+      "anonymous"
     if (!checkRateLimit(identifier)) {
       logError(new Error("Rate limit exceeded"), `Contact form - IP: ${identifier}`)
       return NextResponse.json({ error: ERROR_MESSAGES.CONTACT_FORM.RATE_LIMITED }, { status: 429 })
@@ -82,7 +86,7 @@ export async function POST(request: NextRequest) {
       message: "Thank you for your message! I'll get back to you within 24 hours.",
     })
   } catch (error) {
-    const errorMessage = handleApiError(error, "Contact form submission")
+    // const errorMessage = handleApiError(error, "Contact form submission")
 
     return NextResponse.json({ error: ERROR_MESSAGES.CONTACT_FORM.SUBMISSION_FAILED }, { status: 500 })
   }

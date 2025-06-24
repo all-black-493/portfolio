@@ -593,7 +593,7 @@ export function CodePlayground() {
                               )}
                               {key === "algorithm" && (
                                 <>
-                                  <li>• Dijkstra's algorithm</li>
+                                  <li>• Dijkstra&apos;s algorithm</li>
                                   <li>• Memoization</li>
                                   <li>• Cycle detection</li>
                                   <li>• Graph analysis</li>

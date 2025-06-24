@@ -100,10 +100,10 @@ export function ContactSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-            Let's Work Together
+            Let&apos;s Work Together
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
+            Ready to bring your ideas to life? Let&apos;s discuss your next project and create something amazing together.
           </p>
         </motion.div>
 
@@ -202,7 +202,7 @@ export function ContactSection() {
                   <span className="font-medium">Currently Available</span>
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Open to new opportunities and exciting projects. Let's build something great together!
+                  Open to new opportunities and exciting projects. Let&apos;s build something great together!
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary">Full-time</Badge>
@@ -225,7 +225,7 @@ export function ContactSection() {
               <CardHeader>
                 <CardTitle className="text-2xl">Send Me a Message</CardTitle>
                 <p className="text-muted-foreground">
-                  Fill out the form below and I'll get back to you within 24 hours.
+                  Fill out the form below and I&apos;ll get back to you within 24 hours.
                 </p>
               </CardHeader>
               <CardContent>

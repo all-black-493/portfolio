@@ -129,7 +129,7 @@ export function ProjectShowcase() {
               <Button
                 key={key}
                 variant={filter === key ? "default" : "outline"}
-                onClick={() => setFilter(key as any)}
+                onClick={() => setFilter(key as "all" | "frontend" | "fullstack" | "ai")}
                 className="mb-2"
               >
                 {label}
