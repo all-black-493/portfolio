@@ -2,24 +2,20 @@ import { createSafeActionClient } from "next-safe-action"
 import { logError } from "./errors"
 import { z } from "zod"
 
+const metadataSchema = z.object({
+  actionName: z.string(),
+})
+
 export const actionClient = createSafeActionClient({
-  handleServerError(e: unknown) {
-    if (e instanceof Error) {
-      logError(e, "Server action error")
-      if (process.env.NODE_ENV === "production") {
-        return "An unexpected error occurred. Please try again."
-      }
-      return e.message
-    }
-    return "An unknown error occurred."
+  handleServerError(e) {
+    logError(e, "Server action error")
+
+    return e.message
   },
 
   defineMetadataSchema() {
-    return z.object({
-      actionName: z.string(),
-      requiresAuth: z.boolean(),
-    })
-  },
+    return metadataSchema
+  }
 }).use(async ({ next, metadata }) => {
   const start = Date.now()
 
@@ -38,9 +34,8 @@ export const actionClient = createSafeActionClient({
   return result
 })
 
+// Authenticated action client
 export const authActionClient = actionClient.use(async ({ next, metadata }) => {
-  if (metadata?.requiresAuth) {
-    // Add authentication logic here
-  }
+
   return next()
 })
